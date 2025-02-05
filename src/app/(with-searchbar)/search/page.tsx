@@ -23,6 +23,23 @@ async function SearchResult({ q }: { q: string }) {
   );
 }
 
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+  return {
+    title: `${q} : 한입북스 검색`,
+    description: `${q}의 검색 결과입니다`,
+    openGraph: {
+      title: `${q} : 한입북스 검색`,
+      description: `${q}의 검색 결과입니다`,
+      images: ["/thumbnail.png"],
+    },
+  };
+}
+
 export default async function Page({
   searchParams,
 }: {

@@ -1,12 +1,11 @@
 import BookItem from "@/components/book-item";
 import style from "./page.module.css";
 import { BookData } from "@/types";
-import { delay } from "@/util/delay";
 import { Suspense } from "react";
 import BookListSkeleton from "@/components/skeletone/book-list-skeleton";
+import { Metadata } from "next/dist/types";
 
 async function AllBooks() {
-  await delay(500);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book`,
     { cache: "force-cache" }
@@ -28,7 +27,6 @@ async function AllBooks() {
 }
 
 async function RecoBooks() {
-  await delay(1000);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_SERVER_URL}/book/random`,
     { next: { revalidate: 3 } }
@@ -49,7 +47,15 @@ async function RecoBooks() {
   );
 }
 
-export const dynamic = "force-dynamic";
+export const metadata: Metadata = {
+  title: "한입 북스1",
+  description: "한입 북스에 등록된 도서를 만나보세요1",
+  openGraph: {
+    title: "한입 북스1",
+    description: "한입 북스에 등록된 도서를 만나보세요1",
+    images: ["/thumbnail.png"],
+  },
+};
 
 export default function Home() {
   return (
